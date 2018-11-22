@@ -11,18 +11,22 @@ namespace MaximumFlow
     public class Graph
     {
         private int n;
-        private Stack<int> path = new Stack<int>();
+        private Stack<int> stackPath;
 
-        private int[,] graph;
-        private int[,] residualCapacity;
-        private int[,] changes;
-        private int[,] maxFlow;
+        private int[,] graph;               // Исходный граф
+        private int[,] residualCapacity;    // Остаточная сеть
+        private int[,] changes;             // Матрица изменений (debug)
+        private int[,] maxFlow;             // Максимальный поток
 
-        public Graph() { }
-
-        public Graph(string path)
+        public Graph()
         {
-            ReadFromFile(path);
+            stackPath = new Stack<int>();
+        }
+
+        public Graph(string filePath)
+        {
+            stackPath = new Stack<int>();
+            ReadFromFile(filePath);
         }
 
         public void ReadFromFile(string path)
@@ -60,17 +64,22 @@ namespace MaximumFlow
             int i = 0;
             int n = graph.GetLength(0);
 
-            Print();
-            PrintResidual();
+            Print(); // Печать оригинального графа
+
+            PrintResidual(); // debug
 
             while (i < n)
             {
+                // Если существует ребро с вершиной S, запускаем поиск в глубину
                 if (graph[start, i] > 0)
                 {
-                    if (DFS(start) == 0)
+                    var dfs = DFS(start);
+
+                    // Если проходимость 0 - переход к следующей вершине
+                    if (dfs == 0)
                         ++i;
 
-                    PrintResidual();
+                    PrintResidual(); // debug
                 }
                 else
                     ++i;
@@ -88,41 +97,57 @@ namespace MaximumFlow
             Console.WriteLine("---------------------------------------------\n");
             Console.WriteLine($"Length of max flow = {maxFlowLength}\n");
 
-            Print();
+            Print(); // Печать максимального потока
 
             //Console.ReadLine();
         }
 
+        /// <summary>
+        /// Поиск в глубину
+        /// </summary>
+        /// <param name="start"></param>
+        /// <param name="minFlow"></param>
+        /// <param name="prev"></param>
+        /// <returns></returns>
         private int DFS(int start, int minFlow = int.MaxValue, int prev = -1)
         {
+            // Если вершина S - очищаем стек
             if (start == 0)
-                path.Clear();
+                stackPath.Clear();
 
+            // Если предыдущего элемента нет, то делаем его текущим
             if (prev == -1)
                 prev = start;
 
+            // Если вершина T - возвращаем минимальную проходимость
             if (start == n - 1)
                 return minFlow;
 
+            // Поиск выходящих рёбер
             for (int i = 0; i < n; ++i)
             {
                 if (i == prev)
                     continue;
-
+                
                 if (residualCapacity[start, i] > 0)
                 {
-                    if (path.Contains(i))
+                    // Пропускаем, если в данную вершину уже заходили
+                    if (stackPath.Contains(i))
                         continue;
                     
-                    path.Push(i);
+                    // Добавляем вершину в стек
+                    stackPath.Push(i);
 
+                    // Запускаем следующий поиск в глубину от текущей вершины
                     var dfs = DFS(i, Math.Min(minFlow, residualCapacity[start, i]), start);
 
+                    // Если проходимость 0, ищем следующее ребро
                     if (dfs == 0)
                         continue;
 
+                    // Корректируем минимальную проходимость и остаточную сеть
                     minFlow = Math.Min(minFlow, dfs);
-
+                    
                     residualCapacity[start, i] -= minFlow;
                     residualCapacity[i, start] -= minFlow;
                     maxFlow[start, i] += minFlow;
@@ -131,18 +156,23 @@ namespace MaximumFlow
                 }
             }
 
+            // Поиск входящих рёбер
             for (int i = 0; i < n; ++i)
             {
                 if (i == prev)
                     continue;
 
-                if (residualCapacity[i, start] > 0 && residualCapacity[start, i] < 0)
+                // Если есть обратный путь и заданное ребро не полностью загружено
+                if (residualCapacity[start, i] < 0 && residualCapacity[i, start] > 0)
                 {
+                    // Запускаем следующий поиск в глубину от текущей вершины
                     var dfs = DFS(i, Math.Min(minFlow, -residualCapacity[start, i]), start);
 
+                    // Если проходимость 0, ищем следующее ребро
                     if (dfs == 0)
                         continue;
 
+                    // Корректируем минимальную проходимость и остаточную сеть
                     minFlow = Math.Min(minFlow, dfs);
 
                     residualCapacity[start, i] += minFlow;
