@@ -4,15 +4,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{8319F6E1-6BEE-47FB-B041-D4E88874E26A}</ProjectGuid>
+    <ProjectGuid>{D8AE4FCC-D610-4D42-8DA8-826D5678492F}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Создание_тестовых_файлов</RootNamespace>
-    <AssemblyName>Создание тестовых файлов</AssemblyName>
+    <RootNamespace>MaximumFlow</RootNamespace>
+    <AssemblyName>MaximumFlow</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -44,21 +43,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Graph.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\MaxFlowTest\MaxFlowTest.csproj">
-      <Project>{8cb75bde-eb87-475a-ba1b-d301e3f5e54f}</Project>
-      <Name>MaxFlowTest</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MaximumFlow\MaximumFlow.csproj">
-      <Project>{d8ae4fcc-d610-4d42-8da8-826d5678492f}</Project>
-      <Name>MaximumFlow</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
