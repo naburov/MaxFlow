@@ -30,7 +30,7 @@ namespace Тесты
         public void TestMethod1()
         {
             int count = 2;
-            string filename = place+"\\Mixed Matrix" + String.Format(" {0}.txt", count);
+            string filename = place+"\\Normal Matrix" + String.Format(" {0}.txt", count);
             string filenameAns = place + "\\Properties" + String.Format(" {0}.txt", count);
             int l = Test(filename);
             int a = GetAnswer(filenameAns);
@@ -41,7 +41,7 @@ namespace Тесты
         public void TestMethod2()
         {
             int count = 3;
-            string filename = place + "\\Mixed Matrix" + String.Format(" {0}.txt", count);
+            string filename = place + "\\Normal Matrix" + String.Format(" {0}.txt", count);
             string filenameAns = place + "\\Properties" + String.Format(" {0}.txt", count++);
             int l = Test(filename);
             int a = GetAnswer(filenameAns);
@@ -52,7 +52,7 @@ namespace Тесты
         public void TestMethod3()
         {
             int count = 4;
-            string filename = place + "\\Mixed Matrix" + String.Format(" {0}.txt", count);
+            string filename = place + "\\Normal Matrix" + String.Format(" {0}.txt", count);
             string filenameAns = place + "\\Properties" + String.Format(" {0}.txt", count++);
             int l = Test(filename);
             int a = GetAnswer(filenameAns);
@@ -63,7 +63,7 @@ namespace Тесты
         public void TestMethod4()
         {
             int count = 5;
-            string filename = place + "\\Mixed Matrix" + String.Format(" {0}.txt", count);
+            string filename = place + "\\Normal Matrix" + String.Format(" {0}.txt", count);
             string filenameAns = place + "\\Properties" + String.Format(" {0}.txt", count++);
             int l = Test(filename);
             int a = GetAnswer(filenameAns);
@@ -74,7 +74,7 @@ namespace Тесты
         public void TestMethod5()
         {
             int count = 6;
-            string filename = place + "\\Mixed Matrix" + String.Format(" {0}.txt", count);
+            string filename = place + "\\Normal Matrix" + String.Format(" {0}.txt", count);
             string filenameAns = place + "\\Properties" + String.Format(" {0}.txt", count++);
             int l = Test(filename);
             int a = GetAnswer(filenameAns);
@@ -85,7 +85,7 @@ namespace Тесты
         public void TestMethod6()
         {
             int count = 7;
-            string filename = place + "\\Mixed Matrix" + String.Format(" {0}.txt", count);
+            string filename = place + "\\Normal Matrix" + String.Format(" {0}.txt", count);
             string filenameAns = place + "\\Properties" + String.Format(" {0}.txt", count++);
             int l = Test(filename);
             int a = GetAnswer(filenameAns);
@@ -96,7 +96,7 @@ namespace Тесты
         public void TestMethod7()
         {
             int count = 8;
-            string filename = place + "\\Mixed Matrix" + String.Format(" {0}.txt", count);
+            string filename = place + "\\Normal Matrix" + String.Format(" {0}.txt", count);
             string filenameAns = place + "\\Properties" + String.Format(" {0}.txt", count++);
             int l = Test(filename);
             int a = GetAnswer(filenameAns);
@@ -107,7 +107,7 @@ namespace Тесты
         public void TestMethod8()
         {
             int count = 9;
-            string filename = place + "\\Mixed Matrix" + String.Format(" {0}.txt", count);
+            string filename = place + "\\Normal Matrix" + String.Format(" {0}.txt", count);
             string filenameAns = place + "\\Properties" + String.Format(" {0}.txt", count++);
             int l = Test(filename);
             int a = GetAnswer(filenameAns);
@@ -118,7 +118,7 @@ namespace Тесты
         public void TestMethod9()
         {
             int count = 10;
-            string filename = place + "\\Mixed Matrix" + String.Format(" {0}.txt", count);
+            string filename = place + "\\Normal Matrix" + String.Format(" {0}.txt", count);
             string filenameAns = place + "\\Properties" + String.Format(" {0}.txt", count++);
             int l = Test(filename);
             int a = GetAnswer(filenameAns);
@@ -129,7 +129,7 @@ namespace Тесты
         public void TestMethod10()
         {
             int count = 11;
-            string filename = place + "\\Mixed Matrix" + String.Format(" {0}.txt", count);
+            string filename = place + "\\Normal Matrix" + String.Format(" {0}.txt", count);
             string filenameAns = place + "\\Properties" + String.Format(" {0}.txt", count++);
             int l = Test(filename);
             int a = GetAnswer(filenameAns);
