@@ -50,12 +50,12 @@ namespace MaxFlowTest
                 }
             }
 
-            FileStream f = new FileStream("Normal matrix " + count + ".txt", FileMode.OpenOrCreate);
-            f.Close();
-            f = new FileStream("Mixed matrix " + count + ".txt", FileMode.OpenOrCreate);
-            f.Close();
-            f = new FileStream("Properties " + count + ".txt", FileMode.OpenOrCreate);
-            f.Close();
+            //FileStream f = new FileStream("Normal matrix " + count + ".txt", FileMode.CreateNew);
+            //f.Close();
+            //f = new FileStream("Mixed matrix " + count + ".txt", FileMode.OpenOrCreate);
+            //f.Close();
+            //f = new FileStream("Properties " + count + ".txt", FileMode.OpenOrCreate);
+            //f.Close();
 
 
             StreamWriter sw = new StreamWriter("Normal matrix " + count + ".txt");
