@@ -17,28 +17,38 @@ namespace MaxFlowTest
             int[,] output = new int[n, n];
 
             #region Генерация норм матрицы с выводом
-            for (int i = 0; i < n; i++)
-                for (int j = 0; j < n; j++)
+            int k = rnd.Next(1, n - 1);
+            for (int i = 0; i < k + 1; i++)
+            {
+                for (int j = k + 1; j < n; j++)
                 {
-                    if (i < n / 2 && j > n / 2)
-                    {
-                        output[i, j] = rnd.Next(1, 4);
+                    int elem = rnd.Next(0, 5);
+                    output[i, j] = elem;
+                    s += elem;
+                }
+            }
 
-                        s += output[i, j];
-                    }
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < k + 1; j++)
+                {
+                    if (i < j)
+                        output[i, j] = rnd.Next(s, s + 5);
                     else
                         output[i, j] = 0;
                 }
+            }
 
-            for (int i = 0; i < n; i++)
-                for (int j = 0; j < n; j++)
+            for (int i = k + 1; i < n; i++)
+            {
+                for (int j = k+1; j < n; j++)
                 {
-                    if (i < n / 2 && j <= n / 2 && j > i)
-                        output[i, j] = rnd.Next(s, s + 3);
-
-                    if (i >= n / 2 && j >= n / 2 && j > i)
-                        output[i, j] = rnd.Next(s, s + 3);
+                    if (i < j)
+                        output[i, j] = rnd.Next(s, s + 5);
+                    else
+                        output[i, j] = 0;
                 }
+            }
 
             FileStream f = new FileStream("Normal matrix " + count + ".txt", FileMode.OpenOrCreate);
             f.Close();
@@ -86,9 +96,9 @@ namespace MaxFlowTest
 
             #region Вывод данных
             StreamWriter sw2 = new StreamWriter("Properties " + count + ".txt");
-            sw2.Write(n);
-            sw2.WriteLine();
-            sw2.Write(s);
+            sw2.WriteLine(n);
+            sw2.WriteLine(s);
+            sw2.WriteLine(k);
             sw2.Close();
             #endregion
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using System.IO;
 
-namespace MaximumFlowTest
+namespace MaxFlowTest
 {
     public class Graph
     {
@@ -66,20 +66,20 @@ namespace MaximumFlowTest
 
             Print(); // Печать оригинального графа
 
-            PrintResidual(); // debug
+            Debugger(); // debug
 
             while (i < n)
             {
                 // Если существует ребро с вершиной S, запускаем поиск в глубину
                 if (graph[start, i] > 0)
                 {
-                    var dfs = DFS(start);
+                    var dfs = DFS();
 
                     // Если проходимость 0 - переход к следующей вершине
                     if (dfs == 0)
                         ++i;
 
-                    PrintResidual(); // debug
+                    Debugger(); // debug
                 }
                 else
                     ++i;
@@ -109,11 +109,14 @@ namespace MaximumFlowTest
         /// <param name="minFlow"></param>
         /// <param name="prev"></param>
         /// <returns></returns>
-        private int DFS(int start, int minFlow = int.MaxValue, int prev = -1)
+        private int DFS(int start = -1, int minFlow = int.MaxValue, int prev = -1)
         {
             // Если вершина S - очищаем стек
-            if (start == 0)
+            if (start == -1)
+            {
                 stackPath.Clear();
+                start = 0;
+            }
 
             // Если предыдущего элемента нет, то делаем его текущим
             if (prev == -1)
@@ -128,13 +131,13 @@ namespace MaximumFlowTest
             {
                 if (i == prev)
                     continue;
-                
+
                 if (residualCapacity[start, i] > 0)
                 {
                     // Пропускаем, если в данную вершину уже заходили
                     if (stackPath.Contains(i))
                         continue;
-                    
+
                     // Добавляем вершину в стек
                     stackPath.Push(i);
 
@@ -147,7 +150,7 @@ namespace MaximumFlowTest
 
                     // Корректируем минимальную проходимость и остаточную сеть
                     minFlow = Math.Min(minFlow, dfs);
-                    
+
                     residualCapacity[start, i] -= minFlow;
                     residualCapacity[i, start] -= minFlow;
                     maxFlow[start, i] += minFlow;
@@ -162,9 +165,16 @@ namespace MaximumFlowTest
                 if (i == prev)
                     continue;
 
-                // Если есть обратный путь и заданное ребро не полностью загружено
-                if (residualCapacity[start, i] < 0 && residualCapacity[i, start] > 0)
+                // Если есть обратный путь
+                if (residualCapacity[start, i] < 0)
                 {
+                    // Пропускаем, если в данную вершину уже заходили
+                    if (stackPath.Contains(i))
+                        continue;
+
+                    // Добавляем вершину в стек
+                    stackPath.Push(i);
+
                     // Запускаем следующий поиск в глубину от текущей вершины
                     var dfs = DFS(i, Math.Min(minFlow, -residualCapacity[start, i]), start);
 
@@ -177,6 +187,7 @@ namespace MaximumFlowTest
 
                     residualCapacity[start, i] += minFlow;
                     residualCapacity[i, start] += minFlow;
+                    maxFlow[i, start] -= minFlow;
 
                     return minFlow;
                 }
@@ -192,7 +203,7 @@ namespace MaximumFlowTest
             for (int i = 0; i < n; ++i)
             {
                 for (int j = 0; j < n; ++j)
-                    Console.Write($"{graph[i, j],2} ");
+                    Console.Write($"{graph[i, j],3} ");
 
                 Console.WriteLine();
             }
@@ -200,7 +211,7 @@ namespace MaximumFlowTest
             Console.WriteLine();
         }
 
-        private void PrintResidual()
+        private void Debugger()
         {
             bool hasChanges = false;
 
@@ -230,17 +241,37 @@ namespace MaximumFlowTest
                 {
                     if (changes[i, j] != residualCapacity[i, j])
                     {
+                        if (changes[i, j] > 0)
+                            Console.ForegroundColor = ConsoleColor.Green;
+
+                        Console.Write($"{changes[i, j],3} ");
+
+                        Console.ForegroundColor = ConsoleColor.Gray;
+                    }
+                    else
+                        Console.Write($"{residualCapacity[i, j],3} ");
+                }
+
+                if (i != n / 2)
+                    Console.Write("       ");
+                else
+                    Console.Write("  -->  ");
+
+                for (int j = 0; j < n; ++j)
+                {
+                    if (changes[i, j] != residualCapacity[i, j])
+                    {
                         if (residualCapacity[i, j] >= 0)
                             Console.ForegroundColor = ConsoleColor.Red;
                         else
                             Console.ForegroundColor = ConsoleColor.Green;
 
-                        Console.Write($"{residualCapacity[i, j],2} ");
+                        Console.Write($"{residualCapacity[i, j],3} ");
 
                         Console.ForegroundColor = ConsoleColor.Gray;
                     }
                     else
-                        Console.Write($"{residualCapacity[i, j],2} ");
+                        Console.Write($"{residualCapacity[i, j],3} ");
                 }
 
                 Console.WriteLine();
